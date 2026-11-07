@@ -1,7 +1,7 @@
 # Tatuzão construindo o metrô — acordo do projeto
 
 - Ler README.md e docs/DECISOES.md; depois os guias relacionados à tarefa.
-- Estado inicial é documentação. Não alegar que controles, testes ou aplicação já existem.
+- Aplicação implementada: ler também docs/VALIDACAO.md e docs/APURACAO.md. Distinguir validação local, emulação móvel e publicação.
 - UI e conteúdo em pt-BR; identificadores de código em inglês.
 - Preservar a identidade em docs/IDENTIDADE-VISUAL.md; fonte de verdade da marca é ovictorlab.com e seu código oficial.
 - Aplicar o escopo em docs/ESCOPO.md e validar fatos antes de materializá-los em animação.

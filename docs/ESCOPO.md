@@ -15,13 +15,13 @@ Uma máquina de tipo explicitamente escolhido, um trecho curto de solo e um cicl
 - Cilindros de avanço
 - Eretor e segmentos do anel
 
-Esses grupos são uma proposta semântica; validar sua correspondência com a geometria e as fontes antes de nomear peças como reais.
+Implementado com oito IDs: cutting, shield, chamber, screw, conveyor, thrust, erector e lining. Transporte foi separado em rosca/esteira; eretor e revestimento têm seleção própria. Geometria autoral, sem promessa de fidelidade industrial.
 
 ## Ações principais
 
-| Controle | Comportamento planejado |
+| Controle | Comportamento entregue |
 |---|---|
-| Avançar um ciclo | Mostra a sequência validada do tipo de máquina escolhido. |
+| Avançar um ciclo | EPB: escavação/retirada simultâneas, parada e montagem sequencial. |
 | Cortar o terreno | Revela a relação entre máquina, solo e túnel revestido. |
 | Montar anel | Destaca segmentos e a etapa de instalação do revestimento. |
 
@@ -29,7 +29,7 @@ Base de exploração: órbita, zoom, seleção por lista ou clique, isolamento, 
 
 ## Estado do mecanismo
 
-`ready → excavating → ringAssembly → ready; etapas simultâneas só serão representadas se confirmadas para a variante escolhida.`
+`excavating → ringAssembly → complete`; repetição reinicia em zero. Progresso 0–0,5: avanço; 0,5–0,98: montagem; 0,98–1: anel completo. Tempos ilustrativos, sem avanço durante montagem.
 
 ## Critérios específicos de conclusão
 
@@ -47,3 +47,7 @@ Base de exploração: órbita, zoom, seleção por lista ou clique, isolamento, 
 - Cidade completa, túneis quilométricos e catálogo de todas as tuneladoras.
 
 Ampliações entram no backlog após o piloto, com evidência de uso e esforço. Não incluir funcionalidades só para repetir todas as opções do Fusquinha.
+
+## Aceite em 07/11/2026
+
+Critérios específicos atendidos em código, testes e navegador; evidência em [VALIDACAO.md](VALIDACAO.md). Celular foi conferido por emulação de viewport no Chrome do Mac, sem ensaio em aparelho físico. Publicação não faz parte deste aceite.

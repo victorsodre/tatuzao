@@ -8,12 +8,19 @@
 - Repositório inicialmente privado por escolha operacional conservadora nesta fase. O pedido autoriza o envio dos guias; não foi tratado como solicitação de implementar e publicar os aplicativos.
 - Nenhuma postagem no X enviada. Textos de protótipo e lançamento têm condições explícitas de uso.
 
-## Pendências técnicas
+## 2026-11-07 — implementação e aceite local
 
-- Fabricante de tuneladora: documentação da variante escolhida.
-- Fonte da obra/operador sobre anéis, avanço e condições do solo, sem importar números de outra máquina.
+O pedido posterior de desenvolver todos os projetos autorizou a implementação. A decisão inicial de limitar a entrega a guias foi substituída para desenvolvimento; não houve autorização de deploy público.
 
-Próxima ação: Escolher uma variante e desenhar o ciclo com um corte longitudinal anotado.
+- EPB em modo fechado, avanço interrompido para montagem. Base factual Robbins, Elliniko Metro e DAUB; contexto brasileiro Metrô SP.
+- Geometria autoral, oito conjuntos, dimensões e grupos de apoio ilustrativos. Sem simulação geotécnica ou instrução operacional.
+- Ciclo determinístico, terreno vinculado ao avanço, anéis fixos no mundo, chave inserida axialmente.
+- Identidade oficial e fontes locais. Corte longitudinal, máquina completa, seleção, isolamento, tour, malha, tela cheia, PNG em dois formatos.
+- Sem áudio: não acrescentaria explicação verificável. Não adicionar desmontagem genérica a uma experiência cujo mecanismo principal é construir o revestimento.
+- Oito testes e 91 verificações de navegador aprovadas; build em subpasta e capturas conferidos. Celular por viewport emulado, sem benchmark de hardware.
+- README e guias passam a descrever a aplicação existente. X continua com rascunhos; lançamento depende de URL pública futura.
+
+Próximo passo da coleção: motor-por-dentro. Detalhes e limites de aceite em VALIDACAO.md.
 
 ## Como registrar mudanças
 

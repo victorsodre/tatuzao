@@ -12,10 +12,10 @@ O tatuzão rende uma experiência inteira: cabeça de corte, retirada de terra e
 
 ## Bastidor
 
-Condição/mídia: Usar somente depois de existir o protótipo descrito. Anexar captura real da interação; ajustar o texto ao que efetivamente funcionar.
+Condição/mídia: A versão local já funciona e foi validada em 07/11/2026. Anexar captura real do avanço e da montagem; ainda não há link público para experimentar.
 
 ```text
-Neste protótipo do tatuzão, a câmera entra no corte do terreno. Dá para acompanhar o avanço e pausar na montagem do anel. Estou ajustando a sequência para cada movimento ter uma função clara.
+O tatuzão já escava e monta um anel no meu laboratório 3D. Dá para pausar, voltar no ciclo e isolar cada conjunto. A chave fecha o anel por último. É um modelo educativo; ainda estou preparando a publicação.
 ```
 
 ## Lançamento

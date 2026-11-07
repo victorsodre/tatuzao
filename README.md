@@ -1,6 +1,6 @@
 # Tatuzão construindo o metrô
 
-> **Estado: documentação inicial.** Aplicação ainda não implementada. Planejamento criado em 2026-11-07; prioridade recomendada 4/10.
+> **Desenvolvimento concluído e validado localmente em 07/11/2026.** Aplicação estática pronta para revisão; repositório privado, sem deploy público. Quarto projeto da coleção.
 
 **Como o tatuzão cava e deixa o túnel pronto atrás dele?**
 
@@ -26,10 +26,29 @@ O primeiro Reel do tatuzão registrou 4.435 visualizações; o Short posterior d
 7. [Decisões e estado do projeto](docs/DECISOES.md).
 8. [Textos para o X](POSTAGENS-X.md) e [ordem da coleção](docs/COLECAO.md).
 
-**Próxima ação:** Escolher uma variante e desenhar o ciclo com um corte longitudinal anotado.
+**Versão entregue:** EPB educativa autoral, com oito conjuntos selecionáveis, corte longitudinal, avanço de uma largura de anel e montagem de cinco segmentos mais a chave. Pausa, linha do tempo reversível, isolamento, foco, tour, malha, tela cheia e PNG horizontal/vertical.
 
-**Esforço relativo:** Alto: conjuntos mecânicos e sequência precisam ser coerentes com um tipo real. Prazo só deve ser estimado depois da validação de modelo e fontes.
+## Executar
 
-## O que esta entrega inclui
+Node.js 22.18 ou superior; versões fixadas no lockfile.
 
-Guias de desenvolvimento e manutenção, identidade visual, limites de escopo e rascunhos de divulgação. Não há aplicação, modelo 3D novo, licença de asset adquirida ou site publicado. Os repositórios foram preparados para trabalho independente, inicialmente privado. Não existe `npm install`, `npm test` ou deploy a executar nesta fase.
+```sh
+npm ci
+npm run dev
+npm test
+npm run check
+npm run build
+npm run preview
+```
+
+`dev` abre em `http://127.0.0.1:4311/`. O build em `dist/` usa caminhos relativos e pode ser servido em subpasta. `preview` informa sua porta ao iniciar. Não há backend, LLM, credenciais ou acesso à GPU de produção.
+
+## Conferir a entrega
+
+- [Apuração e simplificações](docs/APURACAO.md): fontes primárias e limites do modelo educativo.
+- [Validação](docs/VALIDACAO.md): oito testes, 91 verificações de navegador, capturas reais e limites de cobertura.
+- [Arquitetura](docs/ARQUITETURA.md) e [manutenção](docs/MANUTENCAO.md): estado determinístico, geometria e procedimentos de alteração.
+
+A cena explica o ciclo; não calcula pressão, estabilidade do solo ou capacidade de produção. Dimensões, apoios e trajetos são ilustrativos. Não é réplica de uma máquina específica.
+
+Publicação do aplicativo e postagens sociais permanecem etapas posteriores. Os rascunhos do X têm condições de uso em [POSTAGENS-X.md](POSTAGENS-X.md).
