@@ -26,9 +26,7 @@ Oito testes cobrem ciclo, limites, reversibilidade, alinhamento da chave, geomet
 
 ## Publicação e reversão
 
-Publicar aplicativo é uma etapa futura. Preparar build revisável, checks e URL alvo; confirmar que o pedido vigente autoriza o deploy. Não habilitar publicação automática apenas porque a documentação foi enviada ao GitHub.
-
-Quando houver deploy, registrar commit, build, URL, data e verificação do caminho público. Manter release anterior para reversão por novo deploy; não reescrever histórico compartilhado. Mudança de visibilidade do repositório é independente de publicar o aplicativo.
+A publicação foi autorizada por Victor em 08/11/2026. O procedimento vigente, os checks, a URL e a reversão estão em [PUBLICACAO.md](PUBLICACAO.md). Pushes em `main` passam a publicar pelo workflow após validação.
 
 ## Medição do piloto
 

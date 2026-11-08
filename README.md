@@ -1,6 +1,8 @@
 # Tatuzão construindo o metrô
 
-> **Desenvolvimento concluído e validado localmente em 07/11/2026.** Aplicação estática pronta para revisão; repositório privado, sem deploy público. Quarto projeto da coleção.
+**[Abrir a experiência →](https://victorsodre.github.io/tatuzao/)** · [Os 10 experimentos](docs/COLECAO.md) · [Publicação e manutenção](docs/PUBLICACAO.md)
+
+[![Tatuzão — captura real da experiência](public/share.png)](https://victorsodre.github.io/tatuzao/)
 
 **Como o tatuzão cava e deixa o túnel pronto atrás dele?**
 
@@ -22,7 +24,7 @@ O primeiro Reel do tatuzão registrou 4.435 visualizações; o Short posterior d
 3. [Identidade visual do ovictorlab](docs/IDENTIDADE-VISUAL.md).
 4. [Arquitetura proposta e reaproveitamento do Fusquinha](docs/ARQUITETURA.md).
 5. [Assets, fontes e pendências de apuração](docs/ASSETS-E-FONTES.md).
-6. [Manutenção, validação e publicação futura](docs/MANUTENCAO.md).
+6. [Manutenção, validação e publicação](docs/MANUTENCAO.md).
 7. [Decisões e estado do projeto](docs/DECISOES.md).
 8. [Textos para o X](POSTAGENS-X.md) e [ordem da coleção](docs/COLECAO.md).
 

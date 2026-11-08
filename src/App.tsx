@@ -1,3 +1,4 @@
+import { CollectionNav } from './ui/CollectionNav.tsx';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight, ArrowUpRight, Box, ChevronRight, Download, Focus, Layers3, Maximize, Minus, Plus, Search, X } from 'lucide-react';
 import { Brand } from './ui/Brand.tsx';
@@ -41,7 +42,7 @@ export function App() {
   useEffect(() => {if (selected && innerWidth <= 900) {const id = requestAnimationFrame(() => inspector.current?.scrollIntoView({block: 'nearest', behavior: reduced ? 'instant' : 'smooth'}));return () => cancelAnimationFrame(id);}}, [selected, reduced]);
   useEffect(() => {
     const key = (e: KeyboardEvent) => {
-      if (e.ctrlKey || e.metaKey || e.altKey || e.target instanceof HTMLInputElement || sources || drawer) return;
+      if (document.querySelector('dialog[open]') || e.ctrlKey || e.metaKey || e.altKey || e.target instanceof HTMLInputElement || sources || drawer) return;
       if (e.key.toLowerCase() === 'r') scene.current?.home();
       if (e.key === 'Escape') select(null);
     };
@@ -61,7 +62,7 @@ export function App() {
       <div className="mobile-actions"><button onClick={() => setDrawer(true)}><Layers3 size={16}/>Conjuntos <span>8</span></button><button disabled={!parts.length || Boolean(error)} onClick={() => guide(0)}>Conhecer a máquina <ArrowRight size={16}/></button></div>
       <CycleControls progress={progress} playing={playing} disabled={!parts.length || Boolean(error)} setProgress={setProgress} setPlaying={setPlaying} reset={reset}/>
       <p className="mechanism-note">{cycle.phase === 'ringAssembly' ? 'AVANÇO PARADO · MONTAGEM DO REVESTIMENTO' : cycle.phase === 'complete' ? 'CICLO COMPLETO · UM NOVO ANEL' : 'RODA, ROSCA E ESTEIRA · TRABALHO COORDENADO'}</p>
-    </main><footer><span>UM EXPERIMENTO DO OVICTORLAB <i>© 2026</i></span><button onClick={() => setSources(true)}>Como funciona · Fontes e créditos <ArrowUpRight size={13}/></button></footer>
+    </main><footer><span>UM EXPERIMENTO DO OVICTORLAB <i>© 2026</i></span><button onClick={() => setSources(true)}>Como funciona · Fontes e créditos <ArrowUpRight size={13}/></button><CollectionNav current="tatuzao"/></footer>
     <Sources open={sources} onClose={() => setSources(false)}/><dialog ref={dialog} className="parts-dialog" aria-label="Conjuntos da tuneladora" onClose={() => setDrawer(false)}><div className="dialog-top"><span className="eyebrow">CONHEÇA A MÁQUINA</span><button className="icon-button" aria-label="Fechar conjuntos" onClick={() => setDrawer(false)}><X size={18}/></button></div>{list()}</dialog><span className="sr-only" role="status" aria-live="polite">{notice}</span>
   </div>;
 }

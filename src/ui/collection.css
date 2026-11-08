@@ -1,0 +1,24 @@
+/* The official brand tokens are documented in docs/IDENTIDADE-VISUAL.md. */
+footer{height:auto;min-height:47px;flex-wrap:wrap;gap:10px 24px;padding-top:8px;padding-bottom:8px}
+.collection-trigger{min-height:36px;color:#ffd21f;font-size:11px;letter-spacing:0}
+.collection-dialog{width:min(660px,calc(100vw - 28px));padding:28px;font:14px Archivo,Arial,sans-serif;letter-spacing:0;text-align:left;color:#f1f2f8;background:#12152b;border-color:#272c4c;overscroll-behavior:contain}
+.collection-top{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.collection-top>span{font:9px 'JetBrains Mono',monospace;letter-spacing:1.2px;color:#a9aecb}
+.collection-dialog .icon-button{width:44px;height:44px}
+.collection-dialog h2{font:36px/1.1 Anton,Impact,sans-serif;font-weight:400;margin:16px 0 10px}
+.collection-dialog>p{color:#a9aecb;line-height:1.6;margin:0 0 22px}
+.collection-dialog nav{display:flex;flex-direction:column}
+.collection-dialog nav a{display:flex;align-items:center;gap:16px;min-height:68px;padding:14px 8px;border-top:1px solid #272c4c;transition:background .15s ease}
+.collection-dialog nav a:hover{background:#1a1e3a}
+.collection-dialog nav a:focus-visible{outline-offset:-2px}
+.collection-dialog .experiment-number{font:11px 'JetBrains Mono',monospace;color:#a9aecb;flex-shrink:0}
+.collection-dialog nav a>span:nth-child(2){flex:1;min-width:0}
+.collection-dialog strong{display:block;font-size:15px;font-weight:600;line-height:1.4}
+.collection-dialog small{display:block;color:#a9aecb;font-size:12px;line-height:1.5;margin-top:4px}
+.collection-dialog nav svg{flex-shrink:0;color:#a9aecb}
+.collection-dialog [aria-current=page] strong,.collection-dialog .experiment-current{color:#ffd21f}
+.collection-dialog .experiment-current{font:9px 'JetBrains Mono',monospace}
+.collection-bottom{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;border-top:1px solid #272c4c;padding-top:22px;margin-top:8px}
+.collection-bottom a{display:inline-flex;align-items:center;gap:8px;min-height:32px;color:#ffd21f;font-size:12px}
+@media(max-width:760px){footer{padding-top:16px;padding-bottom:16px}.collection-trigger{min-height:44px}.collection-dialog{padding:20px}.collection-dialog h2{font-size:32px}.collection-dialog nav a{gap:12px}.collection-dialog small{font-size:11px}}
+@media(prefers-reduced-motion:reduce){.collection-dialog nav a{transition:none}}
