@@ -68,3 +68,5 @@ Vídeo e autoria confirmados pelo oEmbed público do YouTube. Os 76 testes da co
 Fluxo a conferir após cada publicação: abrir pelo cabeçalho, capa legível, zero requisições ao YouTube antes do clique, Enter no botão Carregar vídeo, iframe correto sem autoplay, controles nativos, foco e link direto. Viewports 1440×1000 e 390×844; largura/altura úteis do player de ao menos 200 px, descontando bordas. Limites: telefone físico/Safari fora da amostra e disponibilidade do vídeo depende do YouTube. Evidências desta rodada em `output/video-*`.
 
 Nesta rodada, os dez players foram carregados no Chrome em estado pronto (`5` / cued), com o ID esperado e sem reprodução automática. Navegação pelo cabeçalho, clique/Enter, dimensões mínimas, thumbnail local e link direto aprovados; nenhuma requisição ao YouTube antes do clique ou erro JavaScript nos fluxos.
+
+O mesmo fluxo passou nas dez URLs públicas do GitHub Pages em 08/11/2026: player pronto com ID correto, sem autoplay, sem chamadas ao YouTube antes do clique, teclado e dimensões responsivas aprovados, sem erros JavaScript. A verificação confirmou carregamento do player; não assistiu integralmente aos vídeos.

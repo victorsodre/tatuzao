@@ -63,4 +63,4 @@ npm run preview
 
 A cena explica o ciclo; não calcula pressão, estabilidade do solo ou capacidade de produção. Dimensões, apoios e trajetos são ilustrativos. Não é réplica de uma máquina específica.
 
-Publicação do aplicativo e postagens sociais permanecem etapas posteriores. Os rascunhos do X têm condições de uso em [POSTAGENS-X.md](POSTAGENS-X.md).
+Aplicação publicada no GitHub Pages, com vídeo incorporado e links conferidos. Os rascunhos do X permanecem para publicação manual por Victor em [POSTAGENS-X.md](POSTAGENS-X.md).
