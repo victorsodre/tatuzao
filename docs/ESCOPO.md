@@ -38,7 +38,7 @@ Base de exploração: órbita, zoom, seleção por lista ou clique, isolamento, 
 - O usuário consegue pausar e distinguir corte, retirada de material e montagem dos segmentos.
 
 - A pergunta inicial é respondida por uma interação observável, com texto curto e fontes acessíveis.
-- O modelo funciona no desktop e no celular de referência, com reset e fallback conferidos.
+- Desktop e celular emulado foram validados, com reset/fallback conferidos; teste em telefone físico não integra a evidência disponível.
 - Nenhum botão visível é apenas decorativo ou promete função pendente.
 
 ## Fora da primeira versão

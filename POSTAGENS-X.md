@@ -2,12 +2,12 @@
 
 Rascunhos para Victor publicar posteriormente. **Nada foi enviado.** Público: pessoas curiosas sobre engenharia/ciência e quem acompanha a construção dos projetos. Um assunto por post, sem métricas privadas ou promessa de data.
 
-## Planejamento
+## Apresentação do projeto
 
-Condição/mídia: Pode ser usado para anunciar a intenção. Mostrar esquema identificado como plano ou referência do Fusquinha.
+Condição/mídia: Versão local concluída. Anexar captura real; o texto não anuncia uma URL pública.
 
 ```text
-O tatuzão rende uma experiência inteira: cabeça de corte, retirada de terra e montagem do túnel. Organizei o plano para transformar o vídeo em um modelo 3D que você possa abrir e controlar.
+O tatuzão ganhou um modelo 3D educativo: cabeça de corte, retirada de terra e montagem do revestimento. Dá para abrir o terreno, pausar o ciclo e explorar os conjuntos. A versão local do laboratório está pronta.
 ```
 
 ## Bastidor
