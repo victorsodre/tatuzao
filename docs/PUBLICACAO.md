@@ -36,3 +36,13 @@ Reverter o commit da mudança em um novo commit, validar e publicar novamente. N
 Tese visual: laboratório azul-noite, modelo 3D dominante e amarelo oficial para ações. Conteúdo: marca e vídeo no topo, mecanismo no espaço central, controles abaixo e coleção no rodapé. Interação: preservar movimento didático por gesto, revelar detalhes ao selecionar e navegar por um diálogo discreto com foco e teclado nativos. Movimento reduzido e renderização sob demanda permanecem ativos.
 
 Marca, Anton/Archivo, cores e símbolo foram comparados com ovictorlab.com e a fonte canônica. A prévia social é uma exportação real do aplicativo, com créditos originais. Não foram adicionados rastreadores, backend, chamadas de IA ou publicação social.
+
+## Vídeo incorporado
+
+Configuração em `src/content/video.ts`; player em `src/ui/VideoSection.tsx`. Vídeo do canal: https://www.youtube.com/watch?v=KV6RWi8-zE8. Thumbnail original de `https://i.ytimg.com/vi/KV6RWi8-zE8/sardefault.jpg`, consultada em 08/11/2026 e servida localmente em `public/video-thumbnail.jpg`; não foi recriada ou alterada.
+
+Antes do clique, não há iframe ou requisição ao YouTube. Após **Carregar vídeo**, o iframe usa `youtube-nocookie.com`, `autoplay=0`, `playsinline=1` e `referrerPolicy="strict-origin-when-cross-origin"`. Não remover o referrer: o YouTube exige identificar a origem do embed. Dimensões mínimas de 200×200 px e controles nativos preservados. Thumbnail e embed usam o mesmo ID; o README usa imagem com link porque o GitHub filtra iframes.
+
+Ao trocar o vídeo: confirmar autoria, disponibilidade/incorporação, duração, orientação e relação com o experimento; atualizar a configuração, thumbnail, README e este registro. O link direto fica visível como alternativa para bloqueio de rede, extensão, região ou restrição do vídeo. A disponibilidade do player é controlada pelo YouTube.
+
+Referências: [Player e parâmetros](https://developers.google.com/youtube/player_parameters) · [Incorporação, privacidade e referrer](https://support.google.com/youtube/answer/171780?hl=pt-BR).

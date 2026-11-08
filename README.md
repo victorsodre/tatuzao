@@ -10,6 +10,16 @@ Uma máquina de tipo explicitamente escolhido, um trecho curto de solo e um cicl
 
 Direção e autoria editorial: **Victor Sodré / ovictorlab**. [Site](https://ovictorlab.com/) · [Referência Fusquinha](https://victorsodre.github.io/fusquinha/) · [Repositório](https://github.com/victorsodre/tatuzao).
 
+## Entenda no vídeo
+
+<a href="https://www.youtube.com/watch?v=KV6RWi8-zE8"><img src="public/video-thumbnail.jpg" width="280" alt="Assistir: Como o tatuzão cava o metrô sem a rua afundar? (a terra que ele corta segura o túnel)" /></a>
+
+**[Como o tatuzão cava o metrô sem a rua afundar? (a terra que ele corta segura o túnel)](https://www.youtube.com/watch?v=KV6RWi8-zE8)**
+
+Acompanhe como a escavação sustenta a frente do túnel. No experimento, controle o avanço e a montagem do revestimento.
+
+O player incorporado fica [na página do experimento](https://victorsodre.github.io/tatuzao/#video), com carregamento por clique e sem reprodução automática.
+
 ## Por que desenvolver
 
 O primeiro Reel do tatuzão registrou 4.435 visualizações; o Short posterior do tema tinha 1.701 no YouTube. Consulta em 07/11/2026. Métricas acumuladas são sinais de interesse; não comprovam demanda pelo aplicativo ou alcance orgânico.

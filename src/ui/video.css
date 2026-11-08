@@ -1,0 +1,27 @@
+/* Secondary editorial section: keep the experiment as the first screen. */
+.video-section{border-top:1px solid #272c4c;background:#0b0d1a;padding:80px 40px;scroll-margin-top:24px;outline:none}
+.video-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);align-items:center;gap:64px}
+.video-eyebrow{font:9px/1.7 'JetBrains Mono',monospace;letter-spacing:1.2px;color:#a9aecb;margin:0 0 20px}
+.video-eyebrow span{color:#ffd21f;margin:0 8px}
+.video-copy h2{font:clamp(28px,2.6vw,40px)/1.14 Anton,Impact,sans-serif;font-weight:400;letter-spacing:.1px;margin:0 0 20px;text-wrap:balance}
+.video-context{font-size:14px;line-height:1.8;color:#a9aecb;margin:0 0 20px;max-width:520px}
+.video-external{display:inline-flex;align-items:center;gap:10px;min-height:44px;color:#ffd21f;font-size:13px}
+.video-external:hover{text-decoration:underline;text-underline-offset:4px}
+.video-help{font-size:12px;line-height:1.6;color:#a9aecb;margin:8px 0 0}
+.video-media{position:relative;aspect-ratio:16/9;min-height:202px;width:100%;background:#12152b;border:1px solid #272c4c;border-radius:14px;overflow:hidden}
+.video-media iframe{display:block;width:100%;height:100%;position:absolute;inset:0;border:0}
+.video-cover{position:absolute;inset:0;width:100%;height:100%;padding:0;display:block;text-align:left;color:#f1f2f8;background:#12152b}
+.video-cover img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .2s ease}
+.video-cover:hover img{transform:scale(1.025)}
+.video-cover-shade{position:absolute;inset:0;background:linear-gradient(0deg,#070914f2,transparent 60%)}
+.video-play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:#ffd21f;color:#0b0d1a;box-shadow:0 4px 24px #0006}
+.video-play svg{margin-left:3px}
+.video-cover-caption{position:absolute;left:24px;right:24px;bottom:22px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;color:#f1f2f8}
+.video-cover-caption strong{font-size:14px;font-weight:600}.video-cover-caption>span{font:10px 'JetBrains Mono',monospace;color:#d9dced}
+.video-cover:focus-visible{outline:3px solid #ffd21f;outline-offset:-4px}
+.video-section--portrait .video-inner{grid-template-columns:minmax(0,1fr) 320px;max-width:960px;gap:96px}
+.video-section--portrait .video-media{aspect-ratio:9/16}
+.video-section--portrait .video-cover-caption{flex-direction:column;align-items:flex-start}
+@media(max-width:900px){.video-inner{gap:32px}.video-section--portrait .video-inner{gap:40px;grid-template-columns:minmax(0,1fr) 280px}.video-section{padding:60px 28px}}
+@media(max-width:760px){.video-section{padding:48px 22px}.video-inner,.video-section--portrait .video-inner{display:flex;flex-direction:column;align-items:stretch;gap:28px}.video-copy h2{font-size:30px;text-wrap:pretty}.video-eyebrow{font-size:8px;letter-spacing:.8px}.video-context{font-size:14px}.video-section--portrait .video-media{width:min(100%,300px);align-self:center}.video-cover-caption{left:20px;right:20px;bottom:18px}.video-media{min-height:202px}.video-play{width:58px;height:58px}}
+@media(prefers-reduced-motion:reduce){.video-cover img{transition:none}.video-cover:hover img{transform:none}}
