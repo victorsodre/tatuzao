@@ -14,7 +14,7 @@
 
 ## Testes proporcionais
 
-Oito testes cobrem ciclo, limites, reversibilidade, alinhamento da chave, geometria e enquadramento. Integração para catálogo/nós do asset e retorno ao estado inicial. Fluxo de navegador para carregar, interagir e resetar. Não criar testes que apenas repitam o texto destes guias.
+Catorze testes cobrem ciclo, limites, reversibilidade, alinhamento da chave, geometria, argamassa até a cauda, rua fixa, rosca qualitativa, guia da rua e enquadramento (inclusive a órbita preservada no resize). `check:pages` confere também título, texto estático e JSON-LD do vídeo. Integração para catálogo/nós do asset e retorno ao estado inicial. Fluxo de navegador para carregar, interagir e resetar. Não criar testes que apenas repitam o texto destes guias.
 
 ## Rotina após lançamento
 
@@ -36,7 +36,7 @@ Usar a combinação de qualidade, uso e custo de manutenção para ajustar o pr�
 
 ## Cuidados específicos
 
-Não mover os anéis antigos junto da máquina. Preservar a igualdade entre largura de anel e avanço, o início da montagem após a escavação e a inserção axial da chave. Ao alterar geometria, conferir rosca/câmara, curso dos apoios e folga dentro da cauda em início/meio/fim.
+Não mover os anéis antigos junto da máquina. A argamassa termina na cauda (`TAIL_X + advance`); a rua nunca se move nem afunda na tela (regra editorial do EP310). Fatos novos do guia só com fonte do episódio. Preservar a igualdade entre largura de anel e avanço, o início da montagem após a escavação e a inserção axial da chave. Ao alterar geometria, conferir rosca/câmara, curso dos apoios e folga dentro da cauda em início/meio/fim.
 
 Testar mobile retrato e paisagem, inclusive os controles abaixo da cena. A validação atual usou Chrome no Mac com viewport emulado; aparelho físico e outros navegadores entram quando disponíveis. Não converter essa cobertura em alegação de benchmark móvel.
 

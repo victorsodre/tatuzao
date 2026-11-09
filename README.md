@@ -38,7 +38,7 @@ O primeiro Reel do tatuzão registrou 4.435 visualizações; o Short posterior d
 7. [Decisões e estado do projeto](docs/DECISOES.md).
 8. [Textos para o X](POSTAGENS-X.md) e [ordem da coleção](docs/COLECAO.md).
 
-**Versão entregue:** EPB educativa autoral, com oito conjuntos selecionáveis, corte longitudinal, avanço de uma largura de anel e montagem de cinco segmentos mais a chave. Pausa, linha do tempo reversível, isolamento, foco, tour, malha, tela cheia e PNG horizontal/vertical.
+**Versão entregue:** EPB educativa autoral sob uma rua, com guia "Por que a rua não afunda?" (câmara e rosca, escudo, argamassa, medição na rua), oito conjuntos selecionáveis, corte longitudinal, avanço de uma largura de anel e montagem de cinco segmentos mais a chave. Pausa, linha do tempo reversível, isolamento, foco, tour, malha, tela cheia e PNG horizontal/vertical.
 
 ## Executar
 
@@ -58,9 +58,9 @@ npm run preview
 ## Conferir a entrega
 
 - [Apuração e simplificações](docs/APURACAO.md): fontes primárias e limites do modelo educativo.
-- [Validação](docs/VALIDACAO.md): oito testes, 91 verificações de navegador, capturas reais e limites de cobertura.
+- [Validação](docs/VALIDACAO.md): catorze testes (09/11/2026), 91 verificações de navegador, capturas reais e limites de cobertura.
 - [Arquitetura](docs/ARQUITETURA.md) e [manutenção](docs/MANUTENCAO.md): estado determinístico, geometria e procedimentos de alteração.
 
-A cena explica o ciclo; não calcula pressão, estabilidade do solo ou capacidade de produção. Dimensões, apoios e trajetos são ilustrativos. Não é réplica de uma máquina específica.
+A cena explica o ciclo; não calcula pressão, recalque, estabilidade do solo ou capacidade de produção. O controle da rosca é qualitativo. Dimensões, apoios e trajetos são ilustrativos. Não é réplica de uma máquina específica.
 
 Aplicação publicada no GitHub Pages, com vídeo incorporado e links conferidos. Os rascunhos do X permanecem para publicação manual por Victor em [POSTAGENS-X.md](POSTAGENS-X.md).

@@ -1,5 +1,9 @@
 export const RING_WIDTH = 1.2;
 export const OLD_RING_FACE = -3;
+/** Rings already built behind the machine at the start of the cycle. */
+export const OLD_RINGS = 4;
+/** Tail of the shield (machine coordinates): rings behind it touch the ground. */
+export const TAIL_X = -4.4;
 const radians = (degrees: number) => degrees * Math.PI / 180;
 export const SEGMENTS = [180, 112, 248, 44, 316, 0].map((angle, i) => ({
   id: i === 5 ? 'key' : `segment-${i + 1}`,
@@ -34,7 +38,7 @@ export function sampleCycle(value: number) {
   const radius = lerp(1.22, 2, radial);
   const coverage = SEGMENTS.slice(0, installed).reduce((sum, s) => sum + s.span, 0) / (Math.PI * 2);
   return {
-    progress, phase, advance, faceX: 3.7 + advance, activeIndex, placement,
+    progress, phase, advance, faceX: 3.7 + advance, tailX: TAIL_X + advance, activeIndex, placement,
     installed, padX, erectorAngle, radius, seating,
     segmentX: lerp(OLD_RING_FACE + RING_WIDTH + .65, OLD_RING_FACE + RING_WIDTH / 2, seating),
     liningLength: installed === 6 ? RING_WIDTH : coverage * RING_WIDTH,

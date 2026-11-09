@@ -22,3 +22,15 @@ export function fit(camera: PerspectiveCamera, bounds: Box3, direction: Vector3)
   camera.position.copy(pose.position); camera.lookAt(pose.center); camera.updateProjectionMatrix();
   return pose.center;
 }
+
+/**
+ * New camera position after the viewport aspect changes. Direction, target and the user's zoom
+ * relative to a full fit are kept; only the distance follows the new aspect.
+ */
+export function keepOrbit(position: Vector3, target: Vector3, bounds: Box3, fromAspect: number, toAspect: number, fov = 38) {
+  const offset = position.clone().sub(target), length = offset.length();
+  if (!(length > 1e-6) || !Number.isFinite(fromAspect) || !Number.isFinite(toAspect)) return position.clone();
+  const direction = offset.divideScalar(length);
+  const fitted = (aspect: number) => { const pose = framing(bounds, aspect, direction, fov); return pose.position.distanceTo(pose.center); };
+  return target.clone().addScaledVector(direction, length * fitted(toAspect) / fitted(fromAspect));
+}

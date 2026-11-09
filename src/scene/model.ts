@@ -1,6 +1,7 @@
 import * as T from 'three';
 import { catalog } from '../content/catalog.ts';
-import { SEGMENTS, OLD_RING_FACE, RING_WIDTH } from '../simulation/cycle.ts';
+import { SEGMENTS, OLD_RING_FACE, OLD_RINGS, RING_WIDTH, TAIL_X } from '../simulation/cycle.ts';
+import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { box, mesh, rod, mergeStatic, disposeTree } from './geometry.ts';
 import type { Part } from './types.ts';
 
@@ -41,6 +42,37 @@ function soilSection() {
   points.push(new T.Vector2(0, 3.2), new T.Vector2(3.4, 3.2));
   return new T.ExtrudeGeometry(new T.Shape(points), {depth: 1, bevelEnabled: false}).rotateY(Math.PI / 2);
 }
+/** Top of the soil block; the street sits on it. */
+export const STREET_Y = 3.235;
+/** Arrow along +X, one unit long: shaft and head merged into one geometry. */
+function mergeArrow() {
+  const shaft = new T.CylinderGeometry(.06, .06, .72, 12).rotateZ(-Math.PI / 2).translate(.36, 0, 0);
+  const head = new T.ConeGeometry(.16, .28, 16).rotateZ(-Math.PI / 2).translate(.86, 0, 0);
+  const merged = mergeGeometries([shaft, head]);shaft.dispose();head.dispose();
+  if (!merged) throw new Error('Não foi possível montar a seta de pressão.');
+  return merged;
+}
+/** Street over the section: asphalt, sidewalk, low facades, survey markers and building pins. Never moves. */
+function createStreet() {
+  const group = new T.Group(), markers = new T.Group();group.name = 'street';group.add(markers);
+  const asphalt = new T.MeshStandardMaterial({color: '#30343d', roughness: .9}), paint = new T.MeshStandardMaterial({color: '#d8d3c1', roughness: .8});
+  const sidewalk = new T.MeshStandardMaterial({color: '#8b8c86', roughness: .9}), steel = new T.MeshStandardMaterial({color: '#c3ccd3', metalness: .75, roughness: .3});
+  const glass = new T.MeshStandardMaterial({color: '#1b2130', roughness: .6});
+  box(group, [16.7, .1, 2.25], [-.45, STREET_Y + .05, -1.125], asphalt);
+  box(group, [16.7, .16, .6], [-.45, STREET_Y + .08, -2.55], sidewalk);
+  for (let x = -8.2; x < 7.6; x += 1.5) box(group, [.8, .012, .07], [x, STREET_Y + .106, -1.15], paint);
+  const facades: [number, number, number, string][] = [[-7.35, 2.6, 1.15, '#3b4357'], [-4.55, 2.6, 1.55, '#4b4a52'], [-1.75, 2.6, .95, '#544c45'], [1.05, 2.6, 1.35, '#3c4851'], [3.85, 2.6, 1.7, '#47465a'], [6.4, 2.1, 1.05, '#4d5149']];
+  for (const [x, width, height, color] of facades) {
+    const wall = new T.MeshStandardMaterial({color, roughness: .85});
+    box(group, [width, height, .55], [x, STREET_Y + height / 2, -3.12], wall);
+    for (let row = .45; row < height - .15; row += .45) for (let col = -width / 2 + .4; col < width / 2 - .2; col += .55) box(group, [.28, .22, .02], [x + col, STREET_Y + row, -2.84], glass);
+    // Settlement pin at the foot of each facade.
+    const pin = mesh(group, new T.CylinderGeometry(.035, .035, .12, 10), steel, x - width / 2 + .3, STREET_Y + .26, -2.79);pin.rotation.x = Math.PI / 2;
+  }
+  for (const x of [-6.2, -2.4, 1.4, 5.2]) mesh(markers, new T.CylinderGeometry(.09, .09, .03, 20), steel, x, STREET_Y + .112, -.55);
+  mergeStatic(group);
+  return {group, markers};
+}
 export function createModel() {
   const root = new T.Group(), machine = new T.Group(); root.add(machine);
   const parts: Part[] = catalog.map(info => ({...info, group: new T.Group()}));
@@ -70,6 +102,13 @@ export function createModel() {
     box(cutter, [.12, .1, .1], [.19, Math.cos(a) * 2.04, Math.sin(a) * 2.04], bolt, .015);
   }
   mergeStatic(cutter);
+  // The section also cuts the cutterhead, so the chamber and the face behind it stay visible.
+  const cutterMaterials = new Map<T.Material, T.MeshStandardMaterial>();
+  cutter.traverse(o => {
+    if (!(o instanceof T.Mesh) || !(o.material instanceof T.MeshStandardMaterial)) return;
+    if (!cutterMaterials.has(o.material)) {const clone = o.material.clone();cutterMaterials.set(o.material, clone);sectionMaterials.push(clone);}
+    o.material = cutterMaterials.get(o.material)!;
+  });
 
   const shield = group('shield'), frontShell = new T.Group(); shield.add(frontShell);
   for (const [start, length, color] of [[-.45, 7.9, yellow], [2.9, .65, dark]] as const) {
@@ -88,15 +127,29 @@ export function createModel() {
     cylinderX(shield, .24, .9, steel, 1.3, Math.cos(a) * 1.05, Math.sin(a) * 1.05);
   }
   mergeStatic(shield); mergeStatic(frontShell);
+  // The shield gets its own materials so it can turn see-through without touching other parts.
+  const xrayMaterials = new Map<T.Material, T.MeshStandardMaterial>();
+  for (const shell of [shield, frontShell]) shell.traverse(o => {
+    if (!(o instanceof T.Mesh) || !(o.material instanceof T.MeshStandardMaterial)) return;
+    if (!xrayMaterials.has(o.material)) xrayMaterials.set(o.material, o.material.clone());
+    o.material = xrayMaterials.get(o.material)!;
+  });
 
   const chamber = group('chamber');
   const chamberSoil = soil.clone(), bulkhead = dark.clone();
+  // Double-sided so the cut chamber reads as solid soil, not as an empty shell.
+  chamberSoil.side = T.DoubleSide;
   sectionMaterials.push(chamberSoil, bulkhead);
   cylinderX(chamber, 2.1, .76, chamberSoil, 2.98);
   const plateShape = new T.Shape();plateShape.absarc(0, 0, 2.12, 0, Math.PI * 2, false);
   for (const [u, v, radius] of [[0, 0, .5], [-.35, -1.35, .36]]) {const hole = new T.Path();hole.absarc(u!, v!, radius!, 0, Math.PI * 2, true);plateShape.holes.push(hole);}
   const plate = new T.ExtrudeGeometry(plateShape, {depth: .12, bevelEnabled: false}).rotateY(Math.PI / 2);
   mesh(chamber, plate, bulkhead, 2.52);
+  // Illustrative arrows: the soil held in the chamber pushes on the face. Length is qualitative.
+  const pressure = new T.Group();chamber.add(pressure);pressure.visible = false;
+  const pressureMaterial = material('#ef7d42', .1, .5);
+  const arrowGeometry = mergeArrow();
+  for (const y of [-1.1, 0, 1.1]) {const arrow = mesh(pressure, arrowGeometry, pressureMaterial, 2.68, y, .08);arrow.castShadow = false;arrow.raycast = () => {};}
 
   const intake = new T.Vector3(2.9, -1.35, .35), discharge = new T.Vector3(-3.7, .38, .35), screwLength = intake.distanceTo(discharge);
   const screwAxis = new T.Group();group('screw').add(screwAxis);screwAxis.position.copy(intake).add(discharge).multiplyScalar(.5);screwAxis.quaternion.setFromUnitVectors(new T.Vector3(0, 1, 0), discharge.clone().sub(intake).normalize());
@@ -136,15 +189,20 @@ export function createModel() {
 
   const lining = group('lining'), existingLining = new T.Group();lining.add(existingLining);
   const oldMaterial = concrete.clone();sectionMaterials.push(oldMaterial);
-  for (let ring = 0; ring < 4; ring++) for (const segment of SEGMENTS) {
+  for (let ring = 0; ring < OLD_RINGS; ring++) for (const segment of SEGMENTS) {
     const m = mesh(existingLining, sector(1.83, 2.15, segment.span - .014, RING_WIDTH - .025), oldMaterial, OLD_RING_FACE - RING_WIDTH * (ring + .5));m.rotation.x = segment.angle;
   }
   mergeStatic(existingLining);
   const segments = SEGMENTS.map((segment, i) => {
     const m = mesh(lining, sector(1.83, 2.15, segment.span - .014, RING_WIDTH - .025), i === 5 ? orange : newConcrete, OLD_RING_FACE + RING_WIDTH / 2);m.rotation.x = segment.angle;m.name = segment.id;return m;
   });
-  const groutMaterial = material('#837e70', 0, .95);sectionMaterials.push(groutMaterial);
-  mesh(existingLining, sector(2.16, 2.27, Math.PI * 2 - .002, 3.3), groutMaterial, -6.15);
+  // Grout fills the gap between ring and soil as the tail moves forward: old grout up to the
+  // tail at the start of the cycle, fresh grout over the length advanced in this cycle.
+  const grout = new T.Group();lining.add(grout);
+  const groutMaterial = material('#837e70', 0, .95), freshGroutMaterial = material('#b3aa92', 0, .7);sectionMaterials.push(groutMaterial, freshGroutMaterial);
+  const groutStart = OLD_RING_FACE - OLD_RINGS * RING_WIDTH, unitGrout = sector(2.16, 2.27, Math.PI * 2 - .002, 1).translate(.5, 0, 0);
+  const oldGrout = mesh(grout, unitGrout, groutMaterial, groutStart);oldGrout.scale.x = TAIL_X - groutStart;
+  const freshGrout = mesh(grout, unitGrout, freshGroutMaterial, TAIL_X);
 
   const terrain = new T.Group(), soilBore = new T.Group(), soilFace = new T.Group();terrain.add(soilBore, soilFace);root.add(terrain);
   mesh(soilBore, soilSection(), soil);soilBore.position.x = -8.8;
@@ -155,11 +213,18 @@ export function createModel() {
   for (const y of [-2.65, 2.65, 2.9]) box(soilBore, [1, .025, .015], [.5, y, .008], soilLight);
   const floor = box(terrain, [16.7, .2, 7], [-.45, -2.92, -.1], soil);
   floor.receiveShadow = true;
+  const street = createStreet();terrain.add(street.group);
 
   const applySection = (cut: boolean) => {
     terrain.visible = cut;frontShell.visible = !cut;
     for (const m of sectionMaterials) {m.clippingPlanes = cut ? [sectionPlane] : [];m.clipShadows = true;}
   };
-  return {root, machine, parts, cutter, auger, grains, intake, discharge, rods, pads, arm, gripper, carriage, segments, existingLining, soilBore, soilFace, terrain, applySection, dispose: () => disposeTree(root)};
+  let xray = false;
+  const setXray = (on: boolean) => {
+    if (on === xray) return;xray = on;
+    for (const m of xrayMaterials.values()) {m.transparent = on;m.opacity = on ? .14 : 1;m.depthWrite = !on;m.needsUpdate = true;}
+  };
+  return {root, machine, parts, cutter, auger, grains, intake, discharge, rods, pads, arm, gripper, carriage, segments, existingLining, soilBore, soilFace, terrain,
+    shield, pressure, grout, freshGrout, street: street.group, markers: street.markers, applySection, setXray, dispose: () => disposeTree(root)};
 }
 export type MachineModel = ReturnType<typeof createModel>;

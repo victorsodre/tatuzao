@@ -17,4 +17,13 @@ for (const file of ['404.html', 'share.jpg', 'sitemap.xml', 'icon.svg']) {
 }
 assert.ok(readFileSync('dist/404.html', 'utf8').includes(`href="${expected}"`), '404 must return to the project root');
 assert.ok(html.includes('<noscript>'), 'Keep an accessible no-JavaScript fallback');
+// Search: the question of the video in the title, indexable text outside JS and a VideoObject for the lab's video.
+assert.match(html.match(/<title>([^<]*)<\/title>/)?.[1] ?? '', /tatuzão/i, 'Title must carry the search term');
+const article = html.match(/<article id="como-funciona"[\s\S]*?<\/article>/)?.[0] ?? '';
+for (const term of ['câmara', 'rosca', 'argamassa', 'Linha 6']) assert.ok(article.includes(term), `Static explanation must mention ${term}`);
+const ld = JSON.parse(html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)?.[1] ?? 'null');
+const videoId = readFileSync('src/content/video.ts', 'utf8').match(/"id":\s*"([\w-]{11})"/)?.[1];
+assert.equal(ld?.['@type'], 'VideoObject', 'JSON-LD must describe the video');
+assert.ok(videoId && ld.embedUrl.endsWith(videoId) && ld.url.endsWith(videoId), 'JSON-LD must point to the lab video');
+for (const key of ['name', 'description', 'thumbnailUrl', 'uploadDate', 'duration']) assert.ok(ld[key], `JSON-LD missing ${key}`);
 console.log('Pages: caminhos em subpasta, metadados e arquivos públicos conferidos.');
