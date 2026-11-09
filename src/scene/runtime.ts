@@ -11,6 +11,8 @@ import type { GuideTarget, SceneHandle, ViewState } from './types.ts';
 /** Parts that are visible from outside; anything else needs the shield to turn see-through. */
 const OUTSIDE = new Set(['shield', 'cutting']);
 const TAP_DISTANCE = 6, TAP_TIME = 450;
+/** The cut view, street included. */
+const SECTION = new T.Box3(new T.Vector3(-9, -3, -3.4), new T.Vector3(7.9, 5, 2.4));
 
 export function createScene(host: HTMLElement, onSelect: (id: string) => void, onError: (text: string) => void): SceneHandle {
   const renderer = new T.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'low-power' });
@@ -35,10 +37,11 @@ export function createScene(host: HTMLElement, onSelect: (id: string) => void, o
   let previousPose: {position: T.Vector3; target: T.Vector3} | null = null;
   const homeDirection = new T.Vector3(8, 5.5, 13), guideDirection = new T.Vector3(2.5, 1.8, 8);
   const selectedPart = () => model.parts.find(p => p.id === state.selected);
-  const guideObject = (target: GuideTarget | null) => target === 'grout' ? model.grout : target === 'street' ? model.markers : target ? model.parts.find(p => p.id === target)!.group : null;
+  // The street step points at the markers with its own yellow indicators instead of a bounding box.
+  const guideObject = (target: GuideTarget | null) => target === 'grout' ? model.grout : target === 'chamber' || target === 'erector' ? model.parts.find(p => p.id === target)!.group : null;
   const bounds = () => {
     if (state.isolated && selectedPart()) return new T.Box3().setFromObject(selectedPart()!.group);
-    if (state.cut) return new T.Box3(new T.Vector3(-9, -3, -3.4), new T.Vector3(7.9, 5, 2.4));
+    if (state.cut) return SECTION.clone();
     const b = new T.Box3();for (const part of model.parts) b.expandByObject(part.group);return b;
   };
   const invalidate = () => {if (disposed || active || document.hidden || contextLost) return;active = true;renderer.setAnimationLoop(frame);};
@@ -97,7 +100,7 @@ export function createScene(host: HTMLElement, onSelect: (id: string) => void, o
       const before = state;state = next;
       const section = state.cut && !state.isolated;
       applyCycle(model, sampleCycle(state.progress), section, state.screw, section && state.guide === 'chamber');
-      model.terrain.visible = section;
+      model.terrain.visible = section;model.survey.visible = section && state.guide === 'street';
       for (const part of model.parts) part.group.visible = !state.isolated || part.id === state.selected;
       if (state.wireframe !== before.wireframe) model.root.traverse(o => {if (o instanceof T.Mesh) for (const m of Array.isArray(o.material) ? o.material : [o.material]) if (m instanceof T.MeshStandardMaterial) m.wireframe = state.wireframe;});
       model.setXray(!state.cut && !state.isolated && state.selected !== null && !OUTSIDE.has(state.selected));
@@ -110,8 +113,9 @@ export function createScene(host: HTMLElement, onSelect: (id: string) => void, o
     },
     home,
     focus(id) {const part = model.parts.find(p => p.id === id);if (part) frameBox(new T.Box3().setFromObject(part.group));},
-    // Guide steps look at the section face; the street step shows the whole section, markers above the tunnel.
-    frame(target) {const object = guideObject(target);if (object) frameBox(target === 'street' ? bounds() : new T.Box3().setFromObject(object).expandByScalar(1.2), guideDirection);},
+    // Every guide step uses the same locked view of the whole section, from street to tunnel: the
+    // highlight moves, the camera does not, and nothing is cropped while the panel changes steps.
+    frame() {frameBox(SECTION.clone(), guideDirection);},
     zoom(factor) {camera.position.sub(controls.target).multiplyScalar(factor).add(controls.target);controls.update();invalidate();},
     capture(portrait = false) {saveSceneImage(renderer, scene, camera, bounds(), portrait);invalidate();},
     dispose() {

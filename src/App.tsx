@@ -5,6 +5,7 @@ import { video } from './content/video.ts';
 import { VideoSection } from './kit/VideoSection.tsx';
 import { CollectionNav } from './kit/CollectionNav.tsx';
 import { Brand } from './kit/Brand.tsx';
+import { labNumber } from './kit/collection.ts';
 import { Sources } from './ui/Sources.tsx';
 import { CycleControls } from './ui/CycleControls.tsx';
 import { StreetGuide } from './ui/StreetGuide.tsx';
@@ -18,6 +19,10 @@ import type { Part, SceneHandle } from './scene/types.ts';
 
 // The cycle re-renders the app at 30 Hz; the video and the collection do not depend on it.
 const Video = memo(VideoSection), Collection = memo(CollectionNav);
+// Same number as the collection menu.
+const LAB_NUMBER = labNumber('tatuzao');
+// Ctrl + wheel zooms everywhere; on a Mac the key people reach for is ⌘ (the scene accepts both).
+const ZOOM_KEY = /Mac|iPhone|iPad/.test(navigator.platform) ? '⌘' : 'Ctrl';
 
 export function App() {
   const host = useRef<HTMLDivElement>(null), scene = useRef<SceneHandle | null>(null), inspector = useRef<HTMLElement>(null), dialog = useRef<HTMLDialogElement>(null);
@@ -68,7 +73,7 @@ export function App() {
     const step = streetGuide[index];if (!step) return;
     deselect();setCut(true);setGuide(index);setPlaying(false);setProgress(p => guideProgress(p, step.at));
     if (step.target !== 'chamber') setScrew('balanced');
-    requestAnimationFrame(() => scene.current?.frame(step.target));
+    requestAnimationFrame(() => scene.current?.frame());
   }
   async function fullscreen() {try {if (document.fullscreenElement) await document.exitFullscreen();else await document.documentElement.requestFullscreen();} catch {setNotice('Tela cheia não disponível neste navegador.');}}
   const matches = catalog.filter(p => normalize(p.label).includes(normalize(search)));
@@ -76,9 +81,9 @@ export function App() {
   const note = cycle.phase === 'ringAssembly' ? 'AVANÇO PARADO · MONTAGEM DO REVESTIMENTO' : cycle.phase === 'complete' ? 'CICLO COMPLETO · UM NOVO ANEL' : 'CÂMARA CHEIA SEGURA A FRENTE · A ROSCA DOSA A SAÍDA';
   const footer = <footer><span>UM EXPERIMENTO DO OVICTORLAB <i>© 2026</i></span><button onClick={() => setSources(true)}>Como funciona · Fontes e créditos <ArrowUpRight size={13}/></button><Collection current="tatuzao"/></footer>;
   const footerHost = document.getElementById('site-footer');
-  return <div className="app"><header className="header"><Brand/><div className="collection-label">ENGENHARIA SOB A CIDADE <span>/</span> LAB 04</div><a className="video-link" href="#video">Assistir ao vídeo <ArrowUpRight size={16}/></a></header>
-    <main className="workspace tbm-workspace"><div className="heading"><p className="eyebrow"><span/> EXPERIMENTO 04 <i>—</i> POR DENTRO DA CIDADE</p><h1>TATUZÃO<span>.</span></h1><p className="intro">{project.intro}</p><button className="question-button" aria-pressed={guide !== null} disabled={!ready} onClick={() => guide === null ? guideTo(0) : closeGuide()}>Por que a rua não afunda? <ArrowRight size={15}/></button></div>
-      <div className="canvas-region"><div className="scene-host" ref={host}/>{error && <div className="scene-error" role="alert"><Box size={28}/><h2>Cena indisponível</h2><p>{error}</p><button className="primary" onClick={() => location.reload()}>Tentar novamente</button></div>}<div className="scene-mode"><span className={'status-dot' + (playing ? ' active' : '')}/>{isolated ? 'CONJUNTO ISOLADO' : cut ? 'CORTE SOB A RUA' : 'VISTA DA MÁQUINA'}<span className="mode-divider"/>EPB</div><div className="orbit-hint"><span className="hint-mouse">Arraste para girar · Ctrl + rolagem aproxima</span><span className="hint-touch">Deslize para os lados para girar</span><i>·</i>Modelo educativo</div></div>
+  return <div className="app"><header className="header"><Brand/><div className="collection-label">ENGENHARIA SOB A CIDADE <span>/</span> LAB {LAB_NUMBER}</div><a className="video-link" href="#video">Ver o vídeo <ArrowUpRight size={16}/></a></header>
+    <main className={'workspace tbm-workspace' + (guide !== null ? ' guiding' : '')}><div className="heading"><p className="eyebrow"><span/> EXPERIMENTO {LAB_NUMBER} <i>—</i> POR DENTRO DA CIDADE</p><h1>TATUZÃO<span>.</span></h1><p className="intro">{project.intro}</p><button className="question-button" aria-pressed={guide !== null} disabled={!ready} onClick={() => guide === null ? guideTo(0) : closeGuide()}>Por que a rua não afunda? <ArrowRight size={15}/></button></div>
+      <div className="canvas-region"><div className="scene-host" ref={host}/>{error && <div className="scene-error" role="alert"><Box size={28}/><h2>Cena indisponível</h2><p>{error}</p><button className="primary" onClick={() => location.reload()}>Tentar novamente</button></div>}<div className="scene-mode"><span className={'status-dot' + (playing ? ' active' : '')}/>{isolated ? 'CONJUNTO ISOLADO' : cut ? 'CORTE SOB A RUA' : 'VISTA DA MÁQUINA'}<span className="mode-divider"/>EPB</div><div className="orbit-hint"><span className="hint-mouse">Arraste para girar · {ZOOM_KEY} + rolagem aproxima<i>·</i></span><span className="hint-touch">Deslize para os lados para girar<i>·</i></span>Modelo educativo</div></div>
       {guide === null && <aside className="sidebar"><div className="sidebar-label">OITO CONJUNTOS. UM CAMINHO.</div>{list()}<div className="sidebar-foot"><span className="mini-line"/><p>Na frente, escavação.<br/>Atrás, mais um trecho de túnel.</p><button className="text-button" disabled={!ready} onClick={() => tourTo(0)}>Conhecer a máquina <ArrowRight size={15}/></button></div></aside>}
       <nav className="view-switch" aria-label="Vista da tuneladora"><button aria-pressed={!cut} className={!cut ? 'active' : ''} onClick={() => {setCut(false);closeGuide();}}>Máquina</button><button aria-pressed={cut} className={cut ? 'active' : ''} onClick={() => setCut(true)}>Corte do terreno</button></nav>
       <div className="camera-tools"><button aria-label="Aproximar" disabled={!parts.length} onClick={() => scene.current?.zoom(.85)}><Plus size={18}/></button><button aria-label="Afastar" disabled={!parts.length} onClick={() => scene.current?.zoom(1.15)}><Minus size={18}/></button><span/><button aria-label="Reenquadrar" onClick={() => scene.current?.home()}><Focus size={18}/></button><button className="wire-button" aria-label="Mostrar malha" aria-pressed={wireframe} onClick={() => setWireframe(v => !v)}><Box size={18}/></button><span/><button aria-label="Salvar imagem PNG" disabled={!ready} onClick={() => scene.current?.capture()}><Download size={18}/></button><button className="format-button" aria-label="Salvar imagem vertical 9 por 16" disabled={!ready} onClick={() => scene.current?.capture(true)}>9:16</button>{Boolean(document.documentElement.requestFullscreen) && <button className="fullscreen-button" aria-label="Tela cheia" onClick={fullscreen}><Maximize size={17}/></button>}</div>

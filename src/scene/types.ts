@@ -7,6 +7,6 @@ export type GuideTarget = 'chamber' | 'erector' | 'grout' | 'street';
 export type ViewState = { progress: number; cut: boolean; selected: string | null; isolated: boolean; wireframe: boolean; screw: ScrewRate; guide: GuideTarget | null };
 export type SceneHandle = {
   parts: Part[]; update: (state: ViewState) => void;
-  home: () => void; focus: (id: string) => void; frame: (target: GuideTarget) => void; zoom: (factor: number) => void;
+  home: () => void; focus: (id: string) => void; frame: () => void; zoom: (factor: number) => void;
   capture: (portrait?: boolean) => void; dispose: () => void;
 };

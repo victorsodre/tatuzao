@@ -69,9 +69,18 @@ function createStreet() {
     // Settlement pin at the foot of each facade.
     const pin = mesh(group, new T.CylinderGeometry(.035, .035, .12, 10), steel, x - width / 2 + .3, STREET_Y + .26, -2.79);pin.rotation.x = Math.PI / 2;
   }
-  for (const x of [-6.2, -2.4, 1.4, 5.2]) mesh(markers, new T.CylinderGeometry(.09, .09, .03, 20), steel, x, STREET_Y + .112, -.55);
+  const markerX = [-6.2, -2.4, 1.4, 5.2], pinX = facades.map(([x, width]) => x - width / 2 + .3);
+  for (const x of markerX) mesh(markers, new T.CylinderGeometry(.09, .09, .03, 20), steel, x, STREET_Y + .112, -.55);
   mergeStatic(group);
-  return {group, markers};
+  // Guide indicators for the street step only: a yellow ring around each marker and a pointer over
+  // each marker and pin. They are not part of the street; they only show where it is measured.
+  const survey = new T.Group();survey.name = 'survey';survey.visible = false;group.add(survey);
+  const signal = new T.MeshBasicMaterial({color: '#ffd21f'});
+  const ring = new T.RingGeometry(.17, .27, 32).rotateX(-Math.PI / 2), pointer = new T.ConeGeometry(.15, .34, 20).rotateX(Math.PI), stem = new T.CylinderGeometry(.025, .025, .4, 8);
+  const add = (geometry: T.BufferGeometry, x: number, y: number, z: number) => {const m = mesh(survey, geometry, signal, x, y, z);m.castShadow = false;m.receiveShadow = false;m.raycast = () => {};};
+  for (const x of markerX) {add(ring, x, STREET_Y + .13, -.55);add(pointer, x, STREET_Y + .42, -.55);add(stem, x, STREET_Y + .79, -.55);}
+  for (const x of pinX) {add(pointer, x, STREET_Y + .58, -2.62);add(stem, x, STREET_Y + .95, -2.62);}
+  return {group, markers, survey};
 }
 export function createModel() {
   const root = new T.Group(), machine = new T.Group(); root.add(machine);
@@ -225,6 +234,6 @@ export function createModel() {
     for (const m of xrayMaterials.values()) {m.transparent = on;m.opacity = on ? .14 : 1;m.depthWrite = !on;m.needsUpdate = true;}
   };
   return {root, machine, parts, cutter, auger, grains, intake, discharge, rods, pads, arm, gripper, carriage, segments, existingLining, soilBore, soilFace, terrain,
-    shield, pressure, grout, freshGrout, street: street.group, markers: street.markers, applySection, setXray, dispose: () => disposeTree(root)};
+    shield, pressure, grout, freshGrout, street: street.group, markers: street.markers, survey: street.survey, applySection, setXray, dispose: () => disposeTree(root)};
 }
 export type MachineModel = ReturnType<typeof createModel>;
