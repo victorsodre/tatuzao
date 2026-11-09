@@ -1,0 +1,11 @@
+.ovl-follow{display:flex;flex-direction:column;gap:12px;margin:24px 0 0}
+.ovl-follow>p{margin:0;font-size:14px;line-height:1.6;color:#f1f2f8}
+.ovl-follow-actions{display:flex;flex-wrap:wrap;gap:10px}
+.ovl-follow a{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border-radius:999px;font:600 13px Archivo,Arial,sans-serif;text-decoration:none;letter-spacing:0}
+.ovl-follow-primary{background:#ffd21f;color:#0b0d1a}
+.ovl-follow-primary:hover{background:#ffe066}
+.ovl-follow-secondary{border:1px solid #3a4070;color:#f1f2f8}
+.ovl-follow-secondary:hover{background:#1a1e3a}
+.ovl-follow a:focus-visible{outline:3px solid #ffd21f;outline-offset:2px}
+.ovl-follow--compact{margin:0}
+.ovl-follow--compact a{min-height:40px;padding:0 14px;font-size:12px}

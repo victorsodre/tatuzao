@@ -18,6 +18,7 @@ footer{height:auto;min-height:47px;flex-wrap:wrap;gap:10px 24px;padding-top:8px;
 .collection-dialog nav svg{flex-shrink:0;color:#a9aecb}
 .collection-dialog [aria-current=page] strong,.collection-dialog .experiment-current{color:#ffd21f}
 .collection-dialog .experiment-current{font:9px 'JetBrains Mono',monospace}
+.collection-dialog .ovl-follow{margin:20px 0}
 .collection-bottom{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;border-top:1px solid #272c4c;padding-top:22px;margin-top:8px}
 .collection-bottom a{display:inline-flex;align-items:center;gap:8px;min-height:32px;color:#ffd21f;font-size:12px}
 @media(max-width:760px){footer{padding-top:16px;padding-bottom:16px}.collection-trigger{min-height:44px}.collection-dialog{padding:20px}.collection-dialog h2{font-size:32px}.collection-dialog nav a{gap:12px}.collection-dialog small{font-size:11px}}

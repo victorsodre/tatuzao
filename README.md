@@ -2,7 +2,7 @@
 
 **[Abrir a experiência →](https://victorsodre.github.io/tatuzao/)** · [Os 10 experimentos](docs/COLECAO.md) · [Publicação e manutenção](docs/PUBLICACAO.md)
 
-[![Tatuzão — captura real da experiência](public/share.png)](https://victorsodre.github.io/tatuzao/)
+[![Tatuzão — captura real da experiência](public/share.jpg)](https://victorsodre.github.io/tatuzao/)
 
 **Como o tatuzão cava e deixa o túnel pronto atrás dele?**
 

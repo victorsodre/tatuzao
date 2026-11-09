@@ -24,7 +24,7 @@ Nas configurações do repositório, Pages usa **GitHub Actions** (`build_type: 
 1. Aguardar o workflow terminar com sucesso e abrir a URL acima sem autenticação.
 2. Conferir título, canvas, ação principal, pausa/reset, fontes e exportação PNG.
 3. Em desktop e celular, abrir **Explorar os 10 experimentos**, seguir um link e voltar. `Escape` fecha o diálogo e devolve o foco ao botão.
-4. Conferir assets, modelo/decodificador quando existentes, fontes locais e `share.png` sem 404. O site depende de JavaScript e WebGL; há mensagens de fallback.
+4. Conferir assets, modelo/decodificador quando existentes, fontes locais e `share.jpg` sem 404. O site depende de JavaScript e WebGL; há mensagens de fallback.
 5. Conferir `404.html`, canonical e links para código, vídeos e site oficial. Recarga na raiz do projeto deve funcionar.
 
 ## Reverter
@@ -39,7 +39,7 @@ Marca, Anton/Archivo, cores e símbolo foram comparados com ovictorlab.com e a f
 
 ## Vídeo incorporado
 
-Configuração em `src/content/video.ts`; player em `src/ui/VideoSection.tsx`. Vídeo do canal: https://www.youtube.com/watch?v=KV6RWi8-zE8. Thumbnail original de `https://i.ytimg.com/vi/KV6RWi8-zE8/sardefault.jpg`, consultada em 08/11/2026 e servida localmente em `public/video-thumbnail.jpg`; não foi recriada ou alterada.
+Configuração em `src/content/video.ts`; player em `src/kit/VideoSection.tsx`. Vídeo do canal: https://www.youtube.com/watch?v=KV6RWi8-zE8. Thumbnail original de `https://i.ytimg.com/vi/KV6RWi8-zE8/sardefault.jpg`, consultada em 08/11/2026 e servida localmente em `public/video-thumbnail.jpg`; não foi recriada ou alterada.
 
 Antes do clique, não há iframe ou requisição ao YouTube. Após **Carregar vídeo**, o iframe usa `youtube-nocookie.com`, `autoplay=0`, `playsinline=1` e `referrerPolicy="strict-origin-when-cross-origin"`. Não remover o referrer: o YouTube exige identificar a origem do embed. Dimensões mínimas de 200×200 px e controles nativos preservados. Thumbnail e embed usam o mesmo ID; o README usa imagem com link porque o GitHub filtra iframes.
 

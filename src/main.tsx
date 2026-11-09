@@ -7,5 +7,8 @@ import '@fontsource/archivo-black/latin-400.css';
 import '@fontsource/jetbrains-mono/latin-400.css';
 import './styles.css';
 import { App } from './App.tsx';
+import { initTracking } from './kit/track.ts';
+
+initTracking('tatuzao');
 
 createRoot(document.getElementById('root')!).render(<App/>);
