@@ -1,5 +1,6 @@
 import { SITE } from './social.ts';
 import { track } from './track.ts';
+import './follow.css';
 
 export function Brand() {
   return <a className="brand" href={SITE + '?ref=lab'} aria-label="ovictorlab, voltar ao site" onClick={() => track('out', 'site')}>

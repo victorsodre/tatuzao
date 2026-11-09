@@ -5,7 +5,7 @@ export type Experiment = { slug: string; title: string; description: string };
 // Ordem: temas com mais audiência no canal primeiro.
 export const EXPERIMENTS: Experiment[] = [
   { slug: 'amazonas-em-camadas', title: 'Amazonas em camadas', description: 'Tire a água da vista e veja o que há sob o rio.' },
-  { slug: 'radar-placas', title: 'Como uma placa é lida', description: 'Captura, recorte, leitura e o clone em dois lugares.' },
+  { slug: 'radar-placas', title: 'Da placa ao clone', description: 'Como a câmera lê a placa e o sistema acha o clone.' },
   { slug: 'caminhao-lixo', title: 'Caminhão de lixo', description: 'Abra a carroceria e veja onde cabe o lixo de uma rua.' },
   { slug: 'voyager', title: 'Voyager 1', description: 'Explore a sonda da NASA e os marcos da viagem.' },
   { slug: 'oleoduto', title: 'Oleoduto', description: 'Siga dois combustíveis e a interface entre os lotes.' },
@@ -17,3 +17,9 @@ export const EXPERIMENTS: Experiment[] = [
 ];
 
 export const labUrl = (slug: string) => `https://victorsodre.github.io/${slug}/`;
+
+/** Número do lab na coleção ("01" a "10"), igual ao menu. Use no cabeçalho. */
+export const labNumber = (slug: string) => {
+  const index = EXPERIMENTS.findIndex(item => item.slug === slug);
+  return index < 0 ? '' : String(index + 1).padStart(2, '0');
+};

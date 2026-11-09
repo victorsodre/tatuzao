@@ -8,4 +8,6 @@
 .ovl-follow-secondary:hover{background:#1a1e3a}
 .ovl-follow a:focus-visible{outline:3px solid #ffd21f;outline-offset:2px}
 .ovl-follow--compact{margin:0}
-.ovl-follow--compact a{min-height:40px;padding:0 14px;font-size:12px}
+.ovl-follow--compact a{min-height:44px;padding:0 14px;font-size:12px}
+/* Marca do cabeçalho: alvo de toque de 44 px em qualquer lab. */
+a.brand{min-height:44px;display:inline-flex;align-items:center}
